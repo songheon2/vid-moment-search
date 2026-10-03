@@ -1,0 +1,40 @@
+{
+  "_comment": "video: 영상 경로(상대경로면 이 파일 위치 기준). query: 찾을 장면 묘사. gt_start/gt_end: 정답 구간(초, 소수 가능). null인 케이스는 SKIP 처리된다.",
+  "cases": [
+    {
+      "id": "case01",
+      "video": "../videos/REPLACE_ME_01.mp4",
+      "query": "",
+      "gt_start": null,
+      "gt_end": null
+    },
+    {
+      "id": "case02",
+      "video": "../videos/REPLACE_ME_02.mp4",
+      "query": "",
+      "gt_start": null,
+      "gt_end": null
+    },
+    {
+      "id": "case03",
+      "video": "../videos/REPLACE_ME_03.mp4",
+      "query": "",
+      "gt_start": null,
+      "gt_end": null
+    },
+    {
+      "id": "case04",
+      "video": "../videos/REPLACE_ME_04.mp4",
+      "query": "",
+      "gt_start": null,
+      "gt_end": null
+    },
+    {
+      "id": "case05",
+      "video": "../videos/REPLACE_ME_05.mp4",
+      "query": "",
+      "gt_start": null,
+      "gt_end": null
+    }
+  ]
+}
