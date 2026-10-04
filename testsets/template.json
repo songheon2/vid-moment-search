@@ -1,40 +1,42 @@
 {
-  "_comment": "video: 영상 경로(상대경로면 이 파일 위치 기준). query: 찾을 장면 묘사. gt_start/gt_end: 정답 구간(초, 소수 가능). null인 케이스는 SKIP 처리된다.",
+  "_comment": "video: 기본 영상 경로(상대경로면 이 파일 위치 기준, 케이스별 video로 덮어쓰기 가능). youtube_url: 정성 검토 시트에 시점 링크를 만들 때 사용(선택). gt: 정답 구간 목록 [[시작, 끝], ...] — 초(숫자) 또는 \"mm:ss\"/\"hh:mm:ss\". 정답이 없는 케이스는 [], 아직 미입력이면 null(SKIP). decoys: 헷갈리는 오답 구간 목록(선택). note: 메모.",
+  "video": "E:/VLM/ytdata/7 Days of Heavy Snow Camping with My Dog . Binge Watching ASMR.mp4",
+  "youtube_url": "https://www.youtube.com/watch?v=I6sXHxGjCPU",
   "cases": [
     {
-      "id": "case01",
-      "video": "../videos/REPLACE_ME_01.mp4",
-      "query": "",
-      "gt_start": null,
-      "gt_end": null
+      "id": "c01",
+      "query": "사람이 바나나 먹는 장면",
+      "gt": null,
+      "decoys": [],
+      "note": "일반: 한 번 나오는 장면"
     },
     {
-      "id": "case02",
-      "video": "../videos/REPLACE_ME_02.mp4",
-      "query": "",
-      "gt_start": null,
-      "gt_end": null
+      "id": "c02",
+      "query": "강아지에게 밥을 주는 장면",
+      "gt": null,
+      "decoys": [],
+      "note": "일반: 여러 번 나오는 장면이면 gt에 구간을 모두 적는다"
     },
     {
-      "id": "case03",
-      "video": "../videos/REPLACE_ME_03.mp4",
+      "id": "c03",
       "query": "",
-      "gt_start": null,
-      "gt_end": null
+      "gt": null,
+      "decoys": [],
+      "note": "디코이: 비슷한 대상이 여러 번 나오는데 그중 하나만 맞는 쿼리. 나머지 구간을 decoys에"
     },
     {
-      "id": "case04",
-      "video": "../videos/REPLACE_ME_04.mp4",
+      "id": "c04",
       "query": "",
-      "gt_start": null,
-      "gt_end": null
+      "gt": null,
+      "decoys": [],
+      "note": "디코이"
     },
     {
-      "id": "case05",
-      "video": "../videos/REPLACE_ME_05.mp4",
+      "id": "c05",
       "query": "",
-      "gt_start": null,
-      "gt_end": null
+      "gt": null,
+      "decoys": [],
+      "note": "없음: 영상에 없는 장면. gt를 []로"
     }
   ]
 }

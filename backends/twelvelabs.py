@@ -14,16 +14,15 @@ from pathlib import Path
 from twelvelabs import TwelveLabs
 
 import config
-from common import Moment, VideoSearchError
+from common import Moment, QueryResult, VideoSearchError
 
-DEFAULT_MODEL = config.TL_MODEL
 POLL_SEC = 10
 
 
 def make_client() -> TwelveLabs:
     api_key = os.environ.get("TWELVE_LABS_API_KEY")
     if not api_key:
-        raise VideoSearchError("환경변수 TWELVE_LABS_API_KEY가 설정되지 않았습니다.")
+        raise VideoSearchError("TWELVE_LABS_API_KEY가 설정되지 않았습니다 (.env 확인).")
     return TwelveLabs(api_key=api_key)
 
 
@@ -49,12 +48,13 @@ def _source_key(path: Path) -> str:
     return f"{path.name}|{path.stat().st_size}"
 
 
-def _find_indexed(client: TwelveLabs, index_id: str, key: str) -> str | None:
+def _find_indexed(client: TwelveLabs, index_id: str, path: Path) -> str | None:
     """이 영상이 이미 인덱스에 있으면 indexed asset id를 돌려준다 (인덱싱 진행 중 포함)."""
-    for item in client.indexes.indexed_assets.list(index_id, user_metadata={"vms_key": key}):
+    key = _source_key(path)
+    # SDK의 user_metadata 필터는 서버가 거부하는 형식으로 보내져서(400) 파일명으로 좁히고 메타데이터는 직접 확인한다.
+    for item in client.indexes.indexed_assets.list(index_id, filename=path.name):
         if item.status == "failed":
             continue
-        # 서버 필터를 그대로 믿지 않고 메타데이터를 직접 확인
         detail = client.indexes.indexed_assets.retrieve(index_id, item.id)
         if (detail.user_metadata or {}).get("vms_key") == key:
             return item.id
@@ -108,11 +108,12 @@ def _wait_indexed(client: TwelveLabs, index_id: str, indexed_id: str) -> None:
         time.sleep(POLL_SEC)
 
 
-def ensure_indexed(client: TwelveLabs, index_id: str, path: Path) -> str:
-    """영상을 인덱스에 올리고(이미 있으면 재사용) 인덱싱이 끝난 indexed asset id를 돌려준다."""
+def ensure_indexed(client: TwelveLabs, index_id: str, path: Path) -> tuple[str, bool]:
+    """영상을 인덱스에 올리고(이미 있으면 재사용) 인덱싱이 끝난 indexed asset id와 재사용 여부를 돌려준다."""
     key = _source_key(path)
-    indexed_id = _find_indexed(client, index_id, key)
-    if indexed_id:
+    indexed_id = _find_indexed(client, index_id, path)
+    reused = indexed_id is not None
+    if reused:
         _log(f"기존 인덱싱 재사용: {indexed_id}")
     else:
         asset_id = _upload_asset(client, path)
@@ -121,18 +122,10 @@ def ensure_indexed(client: TwelveLabs, index_id: str, path: Path) -> str:
         ).id
         _log(f"인덱싱 시작: {indexed_id}")
     _wait_indexed(client, index_id, indexed_id)
-    return indexed_id
+    return indexed_id, reused
 
 
-def search_moments(
-    client: TwelveLabs,
-    video_path: Path,
-    query: str,
-    model: str | None = None,
-    max_matches: int = 5,
-) -> list[Moment]:
-    """영상 하나와 쿼리 하나로 장면 후보를 찾는다. 결과는 rank 순."""
-    model = model or DEFAULT_MODEL
+def prepare(client: TwelveLabs, video_path: Path, profile: dict) -> tuple[tuple[str, str], dict]:
     if not video_path.is_file():
         raise VideoSearchError(f"영상 파일이 없습니다: {video_path}")
     size = video_path.stat().st_size
@@ -142,10 +135,25 @@ def search_moments(
             f"(Marengo 한도 {config.TL_MAX_FILE_BYTES / 1024**3:.0f}GB)"
         )
 
-    index_id = get_or_create_index(client, model)
-    video_id = ensure_indexed(client, index_id, video_path)
+    index_id = get_or_create_index(client, profile["model"])
+    video_id, reused = ensure_indexed(client, index_id, video_path)
+    meta = client.indexes.indexed_assets.retrieve(index_id, video_id).system_metadata
+    info = {
+        "index_id": index_id,
+        "video_id": video_id,
+        "reused": reused,  # True면 이번 실행에서 인덱싱 비용이 들지 않았음
+        "duration_sec": meta.duration if meta else None,
+    }
+    return (index_id, video_id), info
 
-    _log(f"검색: {query}")
+
+def cleanup(client: TwelveLabs, handle: tuple[str, str]) -> None:
+    """인덱스와 영상은 재사용하므로 지우지 않는다."""
+
+
+def query(client: TwelveLabs, handle: tuple[str, str], query: str, profile: dict, max_matches: int) -> QueryResult:
+    index_id, video_id = handle
+    started = time.monotonic()
     pager = client.search.query(
         index_id=index_id,
         query_text=query,
@@ -155,5 +163,9 @@ def search_moments(
         page_limit=min(max_matches, 50),
         request_options={"timeout_in_seconds": config.REQUEST_TIMEOUT_SEC},
     )
-    # 결과는 이미 rank 순. Marengo는 신뢰도 점수를 주지 않는다.
-    return [Moment(c.start, c.end) for c in itertools.islice(pager, max_matches)]
+    clips = list(itertools.islice(pager, max_matches))
+    latency = time.monotonic() - started
+    # 결과는 이미 rank 순. Marengo는 신뢰도 점수를 주지 않고, 구조화된 API라 형식 위반이 없다.
+    moments = [Moment(c.start, c.end) for c in clips]
+    raw = json.dumps([{"start": c.start, "end": c.end, "rank": c.rank} for c in clips])
+    return QueryResult(moments, latency, raw_text=raw, usage={"search_queries": 1})

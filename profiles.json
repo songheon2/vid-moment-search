@@ -1,0 +1,24 @@
+{
+  "_comment": "비교 단위. backend: gemini|twelvelabs. Gemini 옵션: processing(static|agentic, 생략 시 모델 기본값), media_resolution(low|medium|high), thinking_level(minimal|low|medium|high, 생략 시 모델 기본값). agentic은 config.GEMINI_AGENTIC_MODELS 모델만 가능.",
+  "gemini-3.1-pro": {
+    "backend": "gemini",
+    "model": "gemini-3.1-pro-preview",
+    "media_resolution": "low"
+  },
+  "gemini-3.8-flash-static": {
+    "backend": "gemini",
+    "model": "gemini-3.8-flash",
+    "processing": "static",
+    "media_resolution": "low"
+  },
+  "gemini-3.8-flash-agentic": {
+    "backend": "gemini",
+    "model": "gemini-3.8-flash",
+    "processing": "agentic",
+    "media_resolution": "low"
+  },
+  "twelvelabs-marengo3.0": {
+    "backend": "twelvelabs",
+    "model": "marengo3.0"
+  }
+}

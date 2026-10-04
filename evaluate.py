@@ -1,179 +1,158 @@
-"""테스트셋(JSON)의 케이스를 일괄 실행하고 정답 구간과의 IoU를 표로 출력한다.
+"""테스트셋을 프로필별로 실행하고 모든 질의 기록을 results/에 저장한다.
 
-    python evaluate.py testsets/template.json [--backend gemini|twelvelabs] [--model MODEL]
+    python evaluate.py testsets/camping.json --profile gemini-3.1-pro --profile gemini-3.8-flash-agentic --repeats 3
 
-- IoU@1   : 1순위 후보와 정답 구간의 IoU
-- best IoU: 모든 후보 중 가장 높은 IoU
-- 영상 경로가 상대경로면 테스트셋 파일 위치 기준으로 해석한다.
+- 영상은 프로필마다 한 번만 올리고(준비), 케이스 × 반복 횟수만큼 질의한다.
+- 기록은 질의가 끝날 때마다 저장되므로 중간에 멈춰도 그때까지의 결과는 남는다.
+- 실행이 끝나면 report.py와 같은 요약을 출력한다. 여러 실행 비교는 report.py로.
 """
 import argparse
 import json
 import sys
 import time
-import unicodedata
-from dataclasses import dataclass
+from dataclasses import asdict
+from datetime import datetime
 from pathlib import Path
 
-from backends import NAMES, get_backend
-from common import Moment, VideoSearchError, format_timecode
+import config
+import report
+from backends import get_backend, get_profile
+from common import VideoSearchError
+from testset import Case, load_testset
+
+# 일시 오류(5xx, 분당 한도 429)를 다시 시도하기 전 대기 시간(초). 대기 시간은 질의 지연에 포함되지 않는다.
+RETRY_DELAYS = (15, 45, 90)
 
 
-@dataclass
-class CaseResult:
-    case_id: str
-    query: str
-    gt: tuple[float, float] | None
-    moments: list[Moment] | None = None
-    elapsed: float | None = None
-    status: str = "OK"  # OK / SKIP / ERROR
-    message: str = ""
-
-    @property
-    def iou_top1(self) -> float | None:
-        if self.status != "OK":
-            return None
-        return iou(self.moments[0], self.gt) if self.moments else 0.0
-
-    @property
-    def iou_best(self) -> float | None:
-        if self.status != "OK":
-            return None
-        return max((iou(m, self.gt) for m in self.moments), default=0.0)
+def _retryable(e: Exception) -> bool:
+    code = getattr(e, "code", None) or getattr(e, "status_code", None)  # google-genai / twelvelabs
+    if code == 429:
+        return "PerDay" not in str(e)  # 일일 할당량 소진은 기다려도 풀리지 않는다
+    return isinstance(code, int) and code >= 500
 
 
-def iou(pred: Moment, gt: tuple[float, float]) -> float:
-    gt_start, gt_end = gt
-    inter = max(0.0, min(pred.end_sec, gt_end) - max(pred.start_sec, gt_start))
-    union = (pred.end_sec - pred.start_sec) + (gt_end - gt_start) - inter
-    return inter / union if union > 0 else 0.0
+def _short(e: Exception) -> str:
+    text = f"{type(e).__name__}: {e}"
+    return text if len(text) <= 200 else text[:200] + "…"
 
 
-def validate_case(case: dict, base_dir: Path) -> tuple[Path, tuple[float, float]]:
-    """케이스가 실행 가능한지 확인한다. 아니면 SKIP 사유를 담아 ValueError."""
-    if not case.get("query"):
-        raise ValueError("query 미입력")
-    gt_start, gt_end = case.get("gt_start"), case.get("gt_end")
-    if not isinstance(gt_start, (int, float)) or not isinstance(gt_end, (int, float)):
-        raise ValueError("gt_start/gt_end 미입력")
-    if gt_end <= gt_start:
-        raise ValueError("gt_end가 gt_start보다 커야 함")
-    video = Path(case.get("video") or "")
-    if not video.is_absolute():
-        video = base_dir / video
-    if not video.is_file():
-        raise ValueError(f"영상 파일 없음: {video}")
-    return video, (float(gt_start), float(gt_end))
+def query_with_retry(backend, client, handle, case: Case, profile: dict, max_matches: int, log_prefix: str):
+    """(결과, 시도 횟수, 재시도한 오류 목록). 재시도로도 안 되면 마지막 예외에 attempts/retry_errors를 붙여 던진다."""
+    retry_errors = []
+    for attempt in range(1, len(RETRY_DELAYS) + 2):
+        try:
+            return backend.query(client, handle, case.query, profile, max_matches), attempt, retry_errors
+        except Exception as e:
+            if not _retryable(e) or attempt > len(RETRY_DELAYS):
+                e.attempts, e.retry_errors = attempt, retry_errors
+                raise
+            retry_errors.append(_short(e))
+            delay = RETRY_DELAYS[attempt - 1]
+            print(f"{log_prefix}   일시 오류, {delay}s 후 재시도: {_short(e)}", file=sys.stderr)
+            time.sleep(delay)
 
 
-def run_case(backend, client, case: dict, base_dir: Path, model: str) -> CaseResult:
-    result = CaseResult(case_id=str(case.get("id", "?")), query=case.get("query", ""), gt=None)
+def run_profile(name: str, profile: dict, testset_path: Path, meta: dict, cases: list[Case],
+                repeats: int, max_matches: int) -> Path:
+    backend = get_backend(profile["backend"])
+    client = backend.make_client()
+    runnable = [c for c in cases if not c.skip_reason]
+
+    config.RESULTS_DIR.mkdir(exist_ok=True)
+    started_at = datetime.now()
+    out_path = config.RESULTS_DIR / f"{started_at:%Y%m%d-%H%M%S}_{name}.json"
+    run = {
+        "profile_name": name,
+        "profile": profile,
+        "testset": str(testset_path),
+        "youtube_url": meta["youtube_url"],
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "repeats": repeats,
+        "max_matches": max_matches,
+        "cases": [asdict(c) for c in cases],
+        "prepare": [],   # 영상별 업로드/인덱싱 기록
+        "records": [],   # 질의 1회당 1개
+    }
+
+    def save() -> None:
+        out_path.write_text(json.dumps(run, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    handles = {}
     try:
-        video, result.gt = validate_case(case, base_dir)
-    except ValueError as e:
-        result.status, result.message = "SKIP", str(e)
-        return result
+        for video in dict.fromkeys(c.video for c in runnable):
+            entry = {"video": video}
+            started = time.monotonic()
+            try:
+                handles[video], entry["info"] = backend.prepare(client, Path(video), profile)
+            except Exception as e:
+                entry["error"] = f"{type(e).__name__}: {e}"
+                print(f"[{name}] 영상 준비 실패: {entry['error']}", file=sys.stderr)
+            entry["seconds"] = time.monotonic() - started
+            run["prepare"].append(entry)
+            save()
 
-    print(f"\n=== {result.case_id}: {result.query}", file=sys.stderr)
-    started = time.monotonic()
-    try:
-        result.moments = backend.search_moments(client, video, result.query, model)
-    except Exception as e:  # 한 케이스 실패가 전체 평가를 멈추지 않게
-        result.status, result.message = "ERROR", f"{type(e).__name__}: {e}"
-    result.elapsed = time.monotonic() - started
-    return result
-
-
-# ---- 표 출력 (한글 폭 2칸 고려) ----
-
-def _width(s: str) -> int:
-    return sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in s)
-
-
-def _fit(s: str, width: int) -> str:
-    if _width(s) > width:
-        while _width(s) > width - 1:
-            s = s[:-1]
-        s += "…"
-    return s + " " * (width - _width(s))
-
-
-def _span(start: float, end: float) -> str:
-    return f"{format_timecode(start)}~{format_timecode(end)}"
-
-
-def _num(x: float | None) -> str:
-    return "-" if x is None else f"{x:.3f}"
-
-
-def print_table(results: list[CaseResult], backend_name: str, model: str) -> None:
-    columns = [("id", 10), ("query", 28), ("GT", 13), ("pred@1", 13),
-               ("IoU@1", 7), ("best IoU", 8), ("#cand", 5), ("sec", 6), ("status", 6)]
-    header = " | ".join(_fit(name, w) for name, w in columns)
-    rule = "-+-".join("-" * w for _, w in columns)
-
-    print(f"\n백엔드: {backend_name} / 모델: {model}\n")
-    print(header)
-    print(rule)
-    for r in results:
-        top1 = r.moments[0] if r.moments else None
-        cells = [
-            r.case_id,
-            r.query,
-            _span(*r.gt) if r.gt else "-",
-            _span(top1.start_sec, top1.end_sec) if top1 else "-",
-            _num(r.iou_top1),
-            _num(r.iou_best),
-            str(len(r.moments)) if r.moments is not None else "-",
-            f"{r.elapsed:.1f}" if r.elapsed is not None else "-",
-            r.status,
-        ]
-        print(" | ".join(_fit(c, w) for c, (_, w) in zip(cells, columns)))
-    print(rule)
-
-    ok = [r for r in results if r.status == "OK"]
-    if ok:
-        mean_top1 = sum(r.iou_top1 for r in ok) / len(ok)
-        mean_best = sum(r.iou_best for r in ok) / len(ok)
-        cells = [f"평균(n={len(ok)})", "", "", "", _num(mean_top1), _num(mean_best), "", "", ""]
-        print(" | ".join(_fit(c, w) for c, (_, w) in zip(cells, columns)))
-
-    problems = [r for r in results if r.status != "OK"]
-    if problems:
-        print("\n평균에서 제외된 케이스:")
-        for r in problems:
-            print(f"  [{r.status}] {r.case_id}: {r.message}")
+        # 반복을 바깥 루프로 둬서 같은 케이스의 반복 질의가 연달아 나가지 않게 한다.
+        total, done = len(runnable) * repeats, 0
+        for rep in range(repeats):
+            for case in runnable:
+                done += 1
+                print(f"[{name}] ({done}/{total}) {case.id} #{rep + 1}: {case.query}", file=sys.stderr)
+                record = {"case_id": case.id, "repeat": rep}
+                started = time.monotonic()
+                try:
+                    if case.video not in handles:
+                        raise RuntimeError("영상 준비 실패")
+                    result, attempts, retry_errors = query_with_retry(
+                        backend, client, handles[case.video], case, profile, max_matches, f"[{name}]")
+                    record.update(status="ok", attempts=attempts, retry_errors=retry_errors, **asdict(result))
+                except Exception as e:  # 한 질의 실패가 전체 평가를 멈추지 않게
+                    record.update(status="error", error=f"{type(e).__name__}: {e}",
+                                  attempts=getattr(e, "attempts", 1), retry_errors=getattr(e, "retry_errors", []),
+                                  latency_sec=time.monotonic() - started)
+                    print(f"[{name}]   오류: {_short(e)}", file=sys.stderr)
+                run["records"].append(record)
+                save()
+    finally:
+        for handle in handles.values():
+            backend.cleanup(client, handle)
+        run["finished_at"] = datetime.now().isoformat(timespec="seconds")
+        save()
+    return out_path
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="테스트셋으로 장면 검색 IoU를 평가한다.")
+    parser = argparse.ArgumentParser(description="테스트셋을 프로필별로 실행해 평가 기록을 남긴다.")
     parser.add_argument("testset", type=Path, help="테스트셋 JSON 경로")
-    parser.add_argument("--backend", choices=NAMES, default="gemini", help="검색 백엔드 (기본: gemini)")
-    parser.add_argument("--model", help="모델 ID (기본: 백엔드별 config 값)")
+    parser.add_argument("--profile", action="append",
+                        help=f"profiles.json의 프로필 이름. 여러 번 지정 가능 (기본: {config.DEFAULT_PROFILE})")
+    parser.add_argument("--repeats", type=int, default=1, help="케이스별 반복 횟수. 출력 안정성을 보려면 3 이상 (기본: 1)")
+    parser.add_argument("--max-matches", type=int, default=5, help="질의당 최대 후보 수 K (기본: 5)")
     args = parser.parse_args()
 
-    backend = get_backend(args.backend)
-    model = args.model or backend.DEFAULT_MODEL
+    try:
+        profiles = {name: get_profile(name) for name in args.profile or [config.DEFAULT_PROFILE]}
+    except VideoSearchError as e:
+        print(f"오류: {e}", file=sys.stderr)
+        return 1
 
-    cases = json.loads(args.testset.read_text(encoding="utf-8"))["cases"]
-    base_dir = args.testset.resolve().parent
+    meta, cases = load_testset(args.testset)
+    for case in cases:
+        if case.skip_reason:
+            print(f"[SKIP] {case.id}: {case.skip_reason}", file=sys.stderr)
+    if all(c.skip_reason for c in cases):
+        print("실행할 케이스가 없습니다.")
+        return 0
 
-    def runnable(case: dict) -> bool:
+    paths = []
+    for name, profile in profiles.items():
         try:
-            validate_case(case, base_dir)
-            return True
-        except ValueError:
-            return False
-
-    client = None
-    if any(runnable(c) for c in cases):  # 실행할 케이스가 있을 때만 API 키 요구
-        try:
-            client = backend.make_client()
+            paths.append(run_profile(name, profile, args.testset, meta, cases, args.repeats, args.max_matches))
         except VideoSearchError as e:
-            print(f"오류: {e}", file=sys.stderr)
-            return 1
-
-    results = [run_case(backend, client, case, base_dir, model) for case in cases]
-    print_table(results, args.backend, model)
+            print(f"[{name}] 오류: {e}", file=sys.stderr)
+    for path in paths:
+        print(f"기록 저장: {path}")
+    if paths:
+        report.print_report([report.load_run(p) for p in paths])
     return 0
 
 
