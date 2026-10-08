@@ -37,6 +37,8 @@ class Case:
 def _segments(raw, label: str) -> list[Segment]:
     if not isinstance(raw, list):
         raise ValueError(f"{label}는 [[시작, 끝], ...] 형식이어야 함")
+    if len(raw) == 2 and not any(isinstance(x, list) for x in raw):
+        raw = [raw]  # 구간 하나를 [시작, 끝]으로 적은 경우
     segments = []
     for item in raw:
         if not (isinstance(item, list) and len(item) == 2):

@@ -98,13 +98,16 @@ def query_cost(profile: dict, usage: dict) -> float | None:
     if price is None or "prompt_token_count" not in usage:
         return None
     prompt = usage.get("prompt_token_count", 0)
+    # agentic 처리에서 모델이 도구 호출로 불러온 영상 구간은 여기에 잡힌다. 입력 단가로 과금된다.
+    tool_prompt = usage.get("tool_use_prompt_token_count", 0)
     cached = usage.get("cached_content_token_count", 0)
-    audio = _modality_tokens(usage.get("prompt_tokens_details"), "AUDIO")
+    audio = (_modality_tokens(usage.get("prompt_tokens_details"), "AUDIO")
+             + _modality_tokens(usage.get("tool_use_prompt_tokens_details"), "AUDIO"))
     audio_uncached = max(0, audio - _modality_tokens(usage.get("cache_tokens_details"), "AUDIO"))
-    other_uncached = max(0, prompt - cached - audio_uncached)
+    other_uncached = max(0, prompt + tool_prompt - cached - audio_uncached)
     output = usage.get("candidates_token_count", 0) + usage.get("thoughts_token_count", 0)
 
-    long = prompt > price.get("long_threshold", math.inf)
+    long = prompt + tool_prompt > price.get("long_threshold", math.inf)
     unit = lambda key: price[f"{key}_long"] if long and f"{key}_long" in price else price[key]
     audio_unit = price.get("input_audio", unit("input"))
     return (other_uncached * unit("input") + audio_uncached * audio_unit
@@ -236,6 +239,7 @@ def compute_metrics(run: Run) -> list[tuple[str, str, str]]:
     add("비용", "준비 비용 ($, 인덱싱)", _money(prep_cost))
     add("비용", "입력 토큰 / 질의", tok("prompt_token_count"))
     add("비용", "  └ 캐시 적중 토큰", tok("cached_content_token_count"))
+    add("비용", "도구 호출 입력 토큰 / 질의 (agentic 영상 탐색)", tok("tool_use_prompt_token_count"))
     add("비용", "출력 토큰 / 질의", tok("candidates_token_count"))
     add("비용", "thinking 토큰 / 질의", tok("thoughts_token_count"))
 
