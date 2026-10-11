@@ -24,6 +24,7 @@ class Case:
     decoys: list[Segment] = field(default_factory=list)
     note: str = ""
     skip_reason: str = ""
+    youtube_url: str = ""        # 검토 시트의 시점 링크용 (케이스별, 없으면 테스트셋 최상위 값)
 
     @property
     def kind(self) -> str:
@@ -50,9 +51,9 @@ def _segments(raw, label: str) -> list[Segment]:
     return segments
 
 
-def _load_case(raw: dict, default_video: str | None, base_dir: Path) -> Case:
+def _load_case(raw: dict, default_video: str | None, default_url: str, base_dir: Path) -> Case:
     case = Case(id=str(raw.get("id", "?")), query=raw.get("query") or "", video="", gt=None,
-                note=raw.get("note", ""))
+                note=raw.get("note", ""), youtube_url=raw.get("youtube_url") or default_url)
     video = raw.get("video") or default_video or ""
     path = Path(video)
     case.video = str(path if path.is_absolute() else (base_dir / path).resolve())
@@ -76,5 +77,5 @@ def load_testset(path: Path) -> tuple[dict, list[Case]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     base_dir = path.resolve().parent
     meta = {"youtube_url": data.get("youtube_url") or ""}
-    cases = [_load_case(c, data.get("video"), base_dir) for c in data.get("cases", [])]
+    cases = [_load_case(c, data.get("video"), meta["youtube_url"], base_dir) for c in data.get("cases", [])]
     return meta, cases

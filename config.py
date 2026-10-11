@@ -45,6 +45,7 @@ GEMINI_PRICING = {
     "gemini-3.7-flash": {"input": 0.75, "output": 3.75, "cached": 0.075},
     "gemini-3.6-flash": {"input": 0.75, "output": 3.75, "cached": 0.075},
     "gemini-3.5-flash-lite": {"input": 0.30, "output": 2.50, "cached": 0.03},
+    "gemini-3.1-flash-lite": {"input": 0.25, "input_audio": 0.50, "output": 1.50, "cached": 0.025},
 }
 
 # ---- TwelveLabs ----

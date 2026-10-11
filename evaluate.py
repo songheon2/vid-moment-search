@@ -52,8 +52,42 @@ def query_with_retry(backend, client, handle, case: Case, profile: dict, max_mat
             time.sleep(delay)
 
 
+class PreparedVideos:
+    """한 번의 evaluate 실행 안에서 프로필끼리 영상 업로드/인덱싱 결과를 공유한다.
+
+    Gemini 업로드는 모델과 상관없으므로 같은 영상은 한 번만 올린다. TwelveLabs는 인덱스 모델별로 따로 준비한다.
+    공유받은 프로필의 prepare 기록에는 처음 준비할 때의 시간을 그대로 남기고 shared를 붙인다.
+    """
+
+    def __init__(self):
+        self._items = {}  # key -> (backend, client, handle, entry)
+
+    def get(self, backend, client, video: str, profile: dict, log_prefix: str):
+        key = (profile["backend"], video, None if profile["backend"] == "gemini" else profile["model"])
+        if key in self._items:
+            handle, entry = self._items[key][2:]
+            # 이번 프로필에서는 새로 인덱싱하지 않았으므로 인덱싱 비용을 다시 세지 않게 reused로 표시
+            return handle, {**entry, "shared": True, "info": {**entry.get("info", {}), "reused": True}}
+        entry, handle = {"video": video}, None
+        started = time.monotonic()
+        try:
+            handle, entry["info"] = backend.prepare(client, Path(video), profile)
+        except Exception as e:
+            entry["error"] = f"{type(e).__name__}: {e}"
+            print(f"{log_prefix} 영상 준비 실패: {entry['error']}", file=sys.stderr)
+        entry["seconds"] = time.monotonic() - started
+        if handle is not None:
+            self._items[key] = (backend, client, handle, entry)
+        return handle, entry
+
+    def cleanup(self) -> None:
+        for backend, client, handle, _ in self._items.values():
+            backend.cleanup(client, handle)
+        self._items.clear()
+
+
 def run_profile(name: str, profile: dict, testset_path: Path, meta: dict, cases: list[Case],
-                repeats: int, max_matches: int) -> Path:
+                repeats: int, max_matches: int, prepared: PreparedVideos) -> Path:
     backend = get_backend(profile["backend"])
     client = backend.make_client()
     runnable = [c for c in cases if not c.skip_reason]
@@ -61,10 +95,14 @@ def run_profile(name: str, profile: dict, testset_path: Path, meta: dict, cases:
     config.RESULTS_DIR.mkdir(exist_ok=True)
     started_at = datetime.now()
     out_path = config.RESULTS_DIR / f"{started_at:%Y%m%d-%H%M%S}_{name}.json"
+    n = 2
+    while out_path.exists():  # 같은 초에 시작한 실행이 덮어쓰지 않게
+        out_path = config.RESULTS_DIR / f"{started_at:%Y%m%d-%H%M%S}-{n}_{name}.json"
+        n += 1
     run = {
         "profile_name": name,
         "profile": profile,
-        "testset": str(testset_path),
+        "testset": str(testset_path.resolve()),
         "youtube_url": meta["youtube_url"],
         "started_at": started_at.isoformat(timespec="seconds"),
         "repeats": repeats,
@@ -80,14 +118,9 @@ def run_profile(name: str, profile: dict, testset_path: Path, meta: dict, cases:
     handles = {}
     try:
         for video in dict.fromkeys(c.video for c in runnable):
-            entry = {"video": video}
-            started = time.monotonic()
-            try:
-                handles[video], entry["info"] = backend.prepare(client, Path(video), profile)
-            except Exception as e:
-                entry["error"] = f"{type(e).__name__}: {e}"
-                print(f"[{name}] 영상 준비 실패: {entry['error']}", file=sys.stderr)
-            entry["seconds"] = time.monotonic() - started
+            handle, entry = prepared.get(backend, client, video, profile, f"[{name}]")
+            if handle is not None:
+                handles[video] = handle
             run["prepare"].append(entry)
             save()
 
@@ -112,9 +145,7 @@ def run_profile(name: str, profile: dict, testset_path: Path, meta: dict, cases:
                     print(f"[{name}]   오류: {_short(e)}", file=sys.stderr)
                 run["records"].append(record)
                 save()
-    finally:
-        for handle in handles.values():
-            backend.cleanup(client, handle)
+    finally:  # 업로드 정리는 모든 프로필이 끝난 뒤 main에서
         run["finished_at"] = datetime.now().isoformat(timespec="seconds")
         save()
     return out_path
@@ -127,6 +158,7 @@ def main() -> int:
                         help=f"profiles.json의 프로필 이름. 여러 번 지정 가능 (기본: {config.DEFAULT_PROFILE})")
     parser.add_argument("--repeats", type=int, default=1, help="케이스별 반복 횟수. 출력 안정성을 보려면 3 이상 (기본: 1)")
     parser.add_argument("--max-matches", type=int, default=5, help="질의당 최대 후보 수 K (기본: 5)")
+    parser.add_argument("--cases", nargs="+", metavar="ID", help="이 케이스만 실행 (예: --cases c02 c03)")
     args = parser.parse_args()
 
     try:
@@ -136,6 +168,12 @@ def main() -> int:
         return 1
 
     meta, cases = load_testset(args.testset)
+    if args.cases:
+        unknown = set(args.cases) - {c.id for c in cases}
+        if unknown:
+            print(f"오류: 테스트셋에 없는 케이스: {', '.join(sorted(unknown))}", file=sys.stderr)
+            return 1
+        cases = [c for c in cases if c.id in args.cases]
     for case in cases:
         if case.skip_reason:
             print(f"[SKIP] {case.id}: {case.skip_reason}", file=sys.stderr)
@@ -144,11 +182,16 @@ def main() -> int:
         return 0
 
     paths = []
-    for name, profile in profiles.items():
-        try:
-            paths.append(run_profile(name, profile, args.testset, meta, cases, args.repeats, args.max_matches))
-        except VideoSearchError as e:
-            print(f"[{name}] 오류: {e}", file=sys.stderr)
+    prepared = PreparedVideos()
+    try:
+        for name, profile in profiles.items():
+            try:
+                paths.append(run_profile(name, profile, args.testset, meta, cases,
+                                         args.repeats, args.max_matches, prepared))
+            except VideoSearchError as e:
+                print(f"[{name}] 오류: {e}", file=sys.stderr)
+    finally:
+        prepared.cleanup()
     for path in paths:
         print(f"기록 저장: {path}")
     if paths:

@@ -92,13 +92,13 @@ python search.py videos/camping.mp4 "텐트 앞에서 장작에 불을 붙이는
 | negative | `gt: []` (영상에 없는 장면) | "못 찾음"이라고 하는지, 지어내는지 |
 | unlabeled | `gt: null` (정답 미입력) | 비용·속도·안정성만. 정확도 지표에서는 빠진다 |
 
-쿼리가 비어 있으면 SKIP한다.
+쿼리가 비어 있으면 SKIP한다. 영상이 여러 개인 테스트셋은 케이스마다 `video`와 `youtube_url`을 적는다 (예: [testsets/defense_set1.json](testsets/defense_set1.json)).
 
 정답을 다 채우기 전에도 돌려볼 수 있다.
 
 1. 정답을 비워 둔 채(`gt: null`) 실행한다.
 2. 케이스별 표의 1순위 타임코드와 검토 시트를 보고 정답 구간을 채운다.
-3. `report.py --testset`을 돌리면 API를 다시 부르지 않고 정확도까지 다시 계산된다.
+3. `report.py`를 다시 돌리면 API를 다시 부르지 않고 정확도까지 다시 계산된다. 리포트는 실행 때 쓴 테스트셋 파일의 현재 정답을 읽는다.
 
 `youtube_url`을 적으면 정성 검토 시트에 예측 시점으로 바로 가는 링크가 생긴다.
 
@@ -109,17 +109,23 @@ python evaluate.py testsets/camping.json --profile gemini-3.1-pro --profile gemi
 ```
 
 - 프로필마다 영상을 한 번 올리고, (케이스 수 × `--repeats`)번 질의한다. 출력 안정성을 보려면 `--repeats`를 3 이상으로 둔다.
+- 실패했거나 새로 추가한 케이스만 다시 돌릴 때는 `--cases c02 c03`처럼 케이스를 고른다. 리포트가 케이스별로 최신 성공 기록을 합쳐 준다.
 - 질의마다 원문 응답, 토큰 사용량, 지연 시간, 형식 위반, 오류가 `results/<시각>_<프로필>.json`에 바로 기록된다. 중간에 멈춰도 그때까지의 기록은 남는다.
 - 실행이 끝나면 아래 리포트가 출력된다.
 
 ### 3. 리포트
 
 ```bash
-python report.py                          # results/에서 프로필별 최신 실행을 비교
+python report.py                          # results/의 모든 실행을 프로필별로 합쳐 비교
 python report.py results/a.json results/b.json
+python report.py --separate               # 같은 프로필이라도 실행마다 따로 (설정 변경 전후 비교 등)
 python report.py --review review.csv      # 정성 검토 시트 저장
-python report.py --testset testsets/camping.json   # 정답을 고친 뒤 API 재호출 없이 재계산
+python report.py --testset testsets/other.json     # 다른 테스트셋 파일의 정답으로 계산
 ```
+
+같은 테스트셋·같은 프로필(이름과 설정이 같은)의 실행이 여러 개면 하나로 합친다. 케이스마다 성공 기록이 있는 가장 최근 실행의 기록을 쓰므로, 실패한 실행이나 일부만 다시 돌린 실행이 섞여 있어도 된다. 테스트셋이 여러 개면 테스트셋별로 따로 출력하고, 검토 시트도 `review_<테스트셋>.csv`로 나눠 저장한다. `--testset`을 주면 그 테스트셋으로 돌린 실행만 본다.
+
+`evaluate.py`에 프로필을 여러 개 주면 Gemini 프로필끼리는 업로드한 영상을 공유한다 (영상당 한 번만 업로드).
 
 출력은 두 개의 표다.
 
@@ -130,7 +136,7 @@ python report.py --testset testsets/camping.json   # 정답을 고친 뒤 API �
 
 | 구분 | 지표 | 정의 |
 |---|---|---|
-| 정확도 | R@1 / R@K IoU≥θ | 1순위(또는 K개 후보 중 하나)가 정답 구간 중 하나와 IoU≥θ인 질의 비율. θ = 0.3/0.5/0.7. 정답 있는 케이스(normal+decoy)만 |
+| 정확도 | R@1 / R@K IoU≥θ (Recall@1, Recall@K) | 1순위(또는 K개 후보 중 하나, 기본 K=5)가 정답 구간 중 하나와 IoU≥θ인 질의 비율. θ = 0.3/0.5/0.7. 정답 있는 케이스(normal+decoy)만 |
 | | mIoU@1 | 1순위와 정답 구간의 IoU 평균 (결과 없으면 0) |
 | 경계 오차 | 시작/끝 오차 | 1순위가 정답과 겹친 경우, 가장 많이 겹친 정답 구간과의 시작·끝 시점 차이(초). 평균/중앙값 |
 | 디코이 | R@1 IoU≥0.5 | 디코이 케이스에서 1순위가 정답을 맞힌 비율 |
