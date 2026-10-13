@@ -1,0 +1,22 @@
+{
+  "_comment": "논문 3장 실험에 쓴 테스트셋 (2026-10 기준, 17개 질의, 정답 22구간). 영상은 README의 다운로드 명령으로 videos/<YouTube ID>.mp4에 받는다. gt는 정답 구간, decoys는 오인하기 쉬운 유사 장면.",
+  "cases": [
+    {"id": "q01", "video": "../videos/I6sXHxGjCPU.mp4", "youtube_url": "https://www.youtube.com/watch?v=I6sXHxGjCPU", "query": "사람이 바나나 먹는 장면", "gt": [["42:21", "43:12"], ["13:41", "13:49"]], "decoys": []},
+    {"id": "q02", "video": "../videos/x6_cFyjYXwM.mp4", "youtube_url": "https://www.youtube.com/watch?v=x6_cFyjYXwM", "query": "사람이 런닝머신타는 장면", "gt": [["2:13", "2:18"]], "decoys": []},
+    {"id": "q03", "video": "../videos/b9JIUZjfFJc.mp4", "youtube_url": "https://www.youtube.com/watch?v=b9JIUZjfFJc", "query": "사람이 섹소폰 부르는 장면", "gt": [["23:41", "24:05"]], "decoys": []},
+    {"id": "q04", "video": "../videos/vT2c85lcxBg.mp4", "youtube_url": "https://www.youtube.com/watch?v=vT2c85lcxBg", "query": "사람이 걸어가면서 빵먹는 장면", "gt": [["10:57", "11:46"]], "decoys": []},
+    {"id": "q05", "video": "../videos/jMtG6UOgzZA.mp4", "youtube_url": "https://www.youtube.com/watch?v=jMtG6UOgzZA", "query": "사람들이 마스크 쓰고 서 있는 장면", "gt": [["13:02", "13:09"], ["19:30", "19:38"]], "decoys": []},
+    {"id": "q06", "video": "../videos/HEsjQZjVAIQ.mp4", "youtube_url": "https://www.youtube.com/watch?v=HEsjQZjVAIQ", "query": "사람이 튀김우동라면 먹는장면", "gt": [["32:28", "33:08"]], "decoys": []},
+    {"id": "q07", "video": "../videos/pdDiaihL1Y8.mp4", "youtube_url": "https://www.youtube.com/watch?v=pdDiaihL1Y8", "query": "주황색 모자를 쓰고 있는 장면", "gt": [["24:55", "25:00"], ["25:09", "25:55"], ["31:24", "33:48"]], "decoys": []},
+    {"id": "q08", "video": "../videos/vCSEMlNLmO0.mp4", "youtube_url": "https://www.youtube.com/watch?v=vCSEMlNLmO0", "query": "사람과 사람이 악수하는 장면", "gt": [["27:39", "28:25"]], "decoys": [["7:24", "7:35"]]},
+    {"id": "q09", "video": "../videos/OPHazH7HlA4.mp4", "youtube_url": "https://www.youtube.com/watch?v=OPHazH7HlA4", "query": "사람이 얼굴화장하는 장면", "gt": [["1:22", "2:24"]], "decoys": []},
+    {"id": "q10", "video": "../videos/NJ3Lw-8PWFE.mp4", "youtube_url": "https://www.youtube.com/watch?v=NJ3Lw-8PWFE", "query": "차량이 주유소로 들어가는 장면", "gt": [["23:09", "23:14"]], "decoys": []},
+    {"id": "q11", "video": "../videos/3EDRq8CwXR0.mp4", "youtube_url": "https://www.youtube.com/watch?v=3EDRq8CwXR0", "query": "경찰서가 나오는 장면", "gt": [["15:37", "15:41"]], "decoys": []},
+    {"id": "q12", "video": "../videos/-YRRJL7i5yI.mp4", "youtube_url": "https://www.youtube.com/watch?v=-YRRJL7i5yI", "query": "사람이 수경을 낀 상태인 장면", "gt": [["16:50", "16:53"]], "decoys": []},
+    {"id": "q13", "video": "../videos/rKk928WtHKY.mp4", "youtube_url": "https://www.youtube.com/watch?v=rKk928WtHKY", "query": "눈 위에 있는 바나나를 집는 장면", "gt": [["18:26", "18:30"]], "decoys": []},
+    {"id": "q14", "video": "../videos/wyRZj78vhJw.mp4", "youtube_url": "https://www.youtube.com/watch?v=wyRZj78vhJw", "query": "사람이 빵을 먹는 장면", "gt": [["21:07", "21:34"]], "decoys": []},
+    {"id": "q15", "video": "../videos/B_TWwMgKu-Q.mp4", "youtube_url": "https://www.youtube.com/watch?v=B_TWwMgKu-Q", "query": "빨간색 커튼을 치는 장면", "gt": [["18:23", "18:37"]], "decoys": []},
+    {"id": "q16", "video": "../videos/Vqjyh_m-5a8.mp4", "youtube_url": "https://www.youtube.com/watch?v=Vqjyh_m-5a8", "query": "파란옷을 입은 남자가 모자를 쓰는 장면", "gt": [["21:26", "21:29"]], "decoys": []},
+    {"id": "q17", "video": "../videos/dHm3hfg68V8.mp4", "youtube_url": "https://www.youtube.com/watch?v=dHm3hfg68V8", "query": "사람이 어묵꼬치를 먹는 장면", "gt": [["14:26", "14:28"], ["00:03", "00:05"]], "decoys": []}
+  ]
+}

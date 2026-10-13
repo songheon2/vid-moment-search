@@ -1,0 +1,1197 @@
+{
+ "_published": "논문 공개용: 원본 실행 기록에서 테스트셋 17개 질의만 남기고 ID를 q01~q17로 바꾸고 로컬 경로를 지웠다. 응답·토큰·지연 시간 값은 원본 그대로다.",
+ "profile_name": "gemini-3.1-pro",
+ "profile": {
+  "backend": "gemini",
+  "model": "gemini-3.1-pro-preview",
+  "media_resolution": "low"
+ },
+ "started_at": "2026-10-11T11:31:35",
+ "repeats": 1,
+ "max_matches": 5,
+ "finished_at": "2026-10-11T11:46:22",
+ "testset": "testsets/vlog17.json",
+ "youtube_url": "",
+ "cases": [
+  {
+   "id": "q01",
+   "query": "사람이 바나나 먹는 장면",
+   "video": "videos/I6sXHxGjCPU.mp4",
+   "gt": [
+    [
+     2541.0,
+     2592.0
+    ],
+    [
+     821.0,
+     829.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=I6sXHxGjCPU"
+  },
+  {
+   "id": "q02",
+   "query": "사람이 런닝머신타는 장면",
+   "video": "videos/x6_cFyjYXwM.mp4",
+   "gt": [
+    [
+     133.0,
+     138.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=x6_cFyjYXwM"
+  },
+  {
+   "id": "q03",
+   "query": "사람이 섹소폰 부르는 장면",
+   "video": "videos/b9JIUZjfFJc.mp4",
+   "gt": [
+    [
+     1421.0,
+     1445.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=b9JIUZjfFJc"
+  },
+  {
+   "id": "q04",
+   "query": "사람이 걸어가면서 빵먹는 장면",
+   "video": "videos/vT2c85lcxBg.mp4",
+   "gt": [
+    [
+     657.0,
+     706.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=vT2c85lcxBg"
+  },
+  {
+   "id": "q05",
+   "query": "사람들이 마스크 쓰고 서 있는 장면",
+   "video": "videos/jMtG6UOgzZA.mp4",
+   "gt": [
+    [
+     782.0,
+     789.0
+    ],
+    [
+     1170.0,
+     1178.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=jMtG6UOgzZA"
+  },
+  {
+   "id": "q06",
+   "query": "사람이 튀김우동라면 먹는장면",
+   "video": "videos/HEsjQZjVAIQ.mp4",
+   "gt": [
+    [
+     1948.0,
+     1988.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=HEsjQZjVAIQ"
+  },
+  {
+   "id": "q07",
+   "query": "주황색 모자를 쓰고 있는 장면",
+   "video": "videos/pdDiaihL1Y8.mp4",
+   "gt": [
+    [
+     1495.0,
+     1500.0
+    ],
+    [
+     1509.0,
+     1555.0
+    ],
+    [
+     1884.0,
+     2028.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=pdDiaihL1Y8"
+  },
+  {
+   "id": "q08",
+   "query": "사람과 사람이 악수하는 장면",
+   "video": "videos/vCSEMlNLmO0.mp4",
+   "gt": [
+    [
+     1659.0,
+     1705.0
+    ]
+   ],
+   "decoys": [
+    [
+     444.0,
+     455.0
+    ]
+   ],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=vCSEMlNLmO0"
+  },
+  {
+   "id": "q09",
+   "query": "사람이 얼굴화장하는 장면",
+   "video": "videos/OPHazH7HlA4.mp4",
+   "gt": [
+    [
+     82.0,
+     144.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=OPHazH7HlA4"
+  },
+  {
+   "id": "q10",
+   "query": "차량이 주유소로 들어가는 장면",
+   "video": "videos/NJ3Lw-8PWFE.mp4",
+   "gt": [
+    [
+     1389.0,
+     1394.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=NJ3Lw-8PWFE"
+  },
+  {
+   "id": "q11",
+   "query": "경찰서가 나오는 장면",
+   "video": "videos/3EDRq8CwXR0.mp4",
+   "gt": [
+    [
+     937.0,
+     941.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=3EDRq8CwXR0"
+  },
+  {
+   "id": "q12",
+   "query": "사람이 수경을 낀 상태인 장면",
+   "video": "videos/-YRRJL7i5yI.mp4",
+   "gt": [
+    [
+     1010.0,
+     1013.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=-YRRJL7i5yI"
+  },
+  {
+   "id": "q13",
+   "query": "눈 위에 있는 바나나를 집는 장면",
+   "video": "videos/rKk928WtHKY.mp4",
+   "gt": [
+    [
+     1106.0,
+     1110.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=rKk928WtHKY"
+  },
+  {
+   "id": "q14",
+   "query": "사람이 빵을 먹는 장면",
+   "video": "videos/wyRZj78vhJw.mp4",
+   "gt": [
+    [
+     1267.0,
+     1294.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=wyRZj78vhJw"
+  },
+  {
+   "id": "q15",
+   "query": "빨간색 커튼을 치는 장면",
+   "video": "videos/B_TWwMgKu-Q.mp4",
+   "gt": [
+    [
+     1103.0,
+     1117.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=B_TWwMgKu-Q"
+  },
+  {
+   "id": "q16",
+   "query": "파란옷을 입은 남자가 모자를 쓰는 장면",
+   "video": "videos/Vqjyh_m-5a8.mp4",
+   "gt": [
+    [
+     1286.0,
+     1289.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=Vqjyh_m-5a8"
+  },
+  {
+   "id": "q17",
+   "query": "사람이 어묵꼬치를 먹는 장면",
+   "video": "videos/dHm3hfg68V8.mp4",
+   "gt": [
+    [
+     866.0,
+     868.0
+    ],
+    [
+     3.0,
+     5.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=dHm3hfg68V8"
+  }
+ ],
+ "prepare": [
+  {
+   "video": "videos/I6sXHxGjCPU.mp4",
+   "info": {
+    "file": "files/8t78erjnvu7r",
+    "size_bytes": 488725800,
+    "reused": true
+   },
+   "seconds": 223.14099999982864,
+   "shared": true
+  },
+  {
+   "video": "videos/x6_cFyjYXwM.mp4",
+   "info": {
+    "file": "files/d6q7h16rpkjp",
+    "size_bytes": 225712340,
+    "reused": true
+   },
+   "seconds": 71.78099999995902,
+   "shared": true
+  },
+  {
+   "video": "videos/b9JIUZjfFJc.mp4",
+   "info": {
+    "file": "files/xsr7vwsqgfr6",
+    "size_bytes": 295569250,
+    "reused": true
+   },
+   "seconds": 98.45300000021234,
+   "shared": true
+  },
+  {
+   "video": "videos/vT2c85lcxBg.mp4",
+   "info": {
+    "file": "files/e0esc83xctex",
+    "size_bytes": 622184835,
+    "reused": true
+   },
+   "seconds": 147.92200000025332,
+   "shared": true
+  },
+  {
+   "video": "videos/jMtG6UOgzZA.mp4",
+   "info": {
+    "file": "files/i3c0roozwcyi",
+    "size_bytes": 122509362,
+    "reused": true
+   },
+   "seconds": 50.15599999995902,
+   "shared": true
+  },
+  {
+   "video": "videos/HEsjQZjVAIQ.mp4",
+   "info": {
+    "file": "files/njwuql8i2t55",
+    "size_bytes": 634537666,
+    "reused": true
+   },
+   "seconds": 188.17199999978766,
+   "shared": true
+  },
+  {
+   "video": "videos/pdDiaihL1Y8.mp4",
+   "info": {
+    "file": "files/19sh3ku4bdct",
+    "size_bytes": 321733260,
+    "reused": true
+   },
+   "seconds": 107.7960000000894,
+   "shared": true
+  },
+  {
+   "video": "videos/vCSEMlNLmO0.mp4",
+   "info": {
+    "file": "files/f4iet84f6kvo",
+    "size_bytes": 202738880,
+    "reused": true
+   },
+   "seconds": 78.67199999978766,
+   "shared": true
+  },
+  {
+   "video": "videos/OPHazH7HlA4.mp4",
+   "info": {
+    "file": "files/sdoj4f9g9ia9",
+    "size_bytes": 455720393,
+    "reused": true
+   },
+   "seconds": 129.31300000008196,
+   "shared": true
+  },
+  {
+   "video": "videos/NJ3Lw-8PWFE.mp4",
+   "info": {
+    "file": "files/n06qpd96623f",
+    "size_bytes": 209929639,
+    "reused": true
+   },
+   "seconds": 74.57800000021234,
+   "shared": true
+  },
+  {
+   "video": "videos/3EDRq8CwXR0.mp4",
+   "info": {
+    "file": "files/wf2p7mp5f2og",
+    "size_bytes": 227027662,
+    "reused": true
+   },
+   "seconds": 79.59400000004098,
+   "shared": true
+  },
+  {
+   "video": "videos/-YRRJL7i5yI.mp4",
+   "info": {
+    "file": "files/yp46xybi36po",
+    "size_bytes": 153049000,
+    "reused": true
+   },
+   "seconds": 54.5160000002943,
+   "shared": true
+  },
+  {
+   "video": "videos/rKk928WtHKY.mp4",
+   "info": {
+    "file": "files/azkmmz78docu",
+    "size_bytes": 180122975,
+    "reused": true
+   },
+   "seconds": 76.40599999995902,
+   "shared": true
+  },
+  {
+   "video": "videos/wyRZj78vhJw.mp4",
+   "info": {
+    "file": "files/m889z8z0fc27",
+    "size_bytes": 199719634,
+    "reused": true
+   },
+   "seconds": 80.71900000004098,
+   "shared": true
+  },
+  {
+   "video": "videos/B_TWwMgKu-Q.mp4",
+   "info": {
+    "file": "files/xzej81z24oaj",
+    "size_bytes": 128037298,
+    "reused": true
+   },
+   "seconds": 55.625,
+   "shared": true
+  },
+  {
+   "video": "videos/Vqjyh_m-5a8.mp4",
+   "info": {
+    "file": "files/9kukldvzw14d",
+    "size_bytes": 837263645,
+    "reused": true
+   },
+   "seconds": 204.71799999987707,
+   "shared": true
+  },
+  {
+   "video": "videos/dHm3hfg68V8.mp4",
+   "info": {
+    "file": "files/yqpoyw25gmzk",
+    "size_bytes": 145184077,
+    "reused": true
+   },
+   "seconds": 53.8910000002943,
+   "shared": true
+  }
+ ],
+ "records": [
+  {
+   "case_id": "q01",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 807.0,
+     "end_sec": 859.0,
+     "confidence": "high",
+     "reason": "텐트 안에서 한 남자가 바나나의 껍질을 벗겨 먹고 있으며, 반려견에게도 조금 나누어 주는 모습이 담겨 있습니다."
+    },
+    {
+     "start_sec": 1315.0,
+     "end_sec": 1362.0,
+     "confidence": "high",
+     "reason": "남자가 다시 텐트 안에서 바나나를 꺼내 껍질을 벗기고 먹는 장면이 나오며, 이번에도 반려견에게 한 조각을 건네줍니다."
+    }
+   ],
+   "latency_sec": 108.14000000013039,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (13:27 ~ 14:19)",
+    "HH:MM:SS 형식 아님 (21:55 ~ 22:42)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"13:27\",\n      \"end\": \"14:19\",\n      \"confidence\": \"high\",\n      \"reason\": \"텐트 안에서 한 남자가 바나나의 껍질을 벗겨 먹고 있으며, 반려견에게도 조금 나누어 주는 모습이 담겨 있습니다.\"\n    },\n    {\n      \"start\": \"21:55\",\n      \"end\": \"22:42\",\n      \"confidence\": \"high\",\n      \"reason\": \"남자가 다시 텐트 안에서 바나나를 꺼내 껍질을 벗기고 먹는 장면이 나오며, 이번에도 반려견에게 한 조각을 건네줍니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 175,
+    "prompt_token_count": 751435,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 751287
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 148
+     }
+    ],
+    "thoughts_token_count": 535,
+    "total_token_count": 752145
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q02",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 134.0,
+     "end_sec": 286.0,
+     "confidence": "high",
+     "reason": "한 남성이 런닝머신 위에서 걸으면서 이야기하는 장면이 이어집니다."
+    }
+   ],
+   "latency_sec": 23.0,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (02:14 ~ 04:46)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"02:14\",\n      \"end\": \"04:46\",\n      \"confidence\": \"high\",\n      \"reason\": \"한 남성이 런닝머신 위에서 걸으면서 이야기하는 장면이 이어집니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 77,
+    "prompt_token_count": 116721,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 116571
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 150
+     }
+    ],
+    "thoughts_token_count": 366,
+    "total_token_count": 117164
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q03",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1420.0,
+     "end_sec": 1435.0,
+     "confidence": "high",
+     "reason": "남자가 섹소폰을 연주하는 장면입니다."
+    }
+   ],
+   "latency_sec": 113.64099999982864,
+   "format_issues": [],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"00:23:40\",\n      \"end\": \"00:23:55\",\n      \"confidence\": \"high\",\n      \"reason\": \"남자가 섹소폰을 연주하는 장면입니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 74,
+    "prompt_token_count": 163402,
+    "prompt_tokens_details": [
+     {
+      "modality": "TEXT",
+      "token_count": 148
+     },
+     {
+      "modality": "VIDEO",
+      "token_count": 163254
+     }
+    ],
+    "thoughts_token_count": 1213,
+    "total_token_count": 164689
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q04",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 656.0,
+     "end_sec": 699.0,
+     "confidence": "high",
+     "reason": "두 사람이 길거리를 걸어가면서 소금빵을 베어 먹고 대화를 나누는 모습이 지속적으로 나타납니다."
+    },
+    {
+     "start_sec": 715.0,
+     "end_sec": 722.0,
+     "confidence": "high",
+     "reason": "남자가 다음 장소로 이동하기 위해 걸어가면서 손에 든 소금빵을 먹는 장면이 포함되어 있습니다."
+    }
+   ],
+   "latency_sec": 48.438000000081956,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (10:56 ~ 11:39)",
+    "HH:MM:SS 형식 아님 (11:55 ~ 12:02)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"10:56\",\n      \"end\": \"11:39\",\n      \"confidence\": \"high\",\n      \"reason\": \"두 사람이 길거리를 걸어가면서 소금빵을 베어 먹고 대화를 나누는 모습이 지속적으로 나타납니다.\"\n    },\n    {\n      \"start\": \"11:55\",\n      \"end\": \"12:02\",\n      \"confidence\": \"high\",\n      \"reason\": \"남자가 다음 장소로 이동하기 위해 걸어가면서 손에 든 소금빵을 먹는 장면이 포함되어 있습니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 156,
+    "prompt_token_count": 144385,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 144235
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 150
+     }
+    ],
+    "thoughts_token_count": 727,
+    "total_token_count": 145268
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q05",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 677.0,
+     "end_sec": 680.0,
+     "confidence": "high",
+     "reason": "마스크를 착용한 사람들이 야외에 서 있는 모습이 보입니다."
+    },
+    {
+     "start_sec": 692.0,
+     "end_sec": 696.0,
+     "confidence": "high",
+     "reason": "마스크를 쓴 사람들이 줄을 지어 서 있는 장면입니다."
+    },
+    {
+     "start_sec": 702.0,
+     "end_sec": 707.0,
+     "confidence": "high",
+     "reason": "마스크를 착용한 사람들의 얼굴이 클로즈업되며 서 있는 모습이 나타납니다."
+    },
+    {
+     "start_sec": 712.0,
+     "end_sec": 716.0,
+     "confidence": "high",
+     "reason": "마스크를 쓴 채 서 있는 사람들의 모습이 다시 한 번 나옵니다."
+    },
+    {
+     "start_sec": 718.0,
+     "end_sec": 724.0,
+     "confidence": "high",
+     "reason": "안경과 마스크를 착용한 사람을 포함하여 여러 명이 서 있는 장면이 계속됩니다."
+    }
+   ],
+   "latency_sec": 25.04699999978766,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (11:17 ~ 11:20)",
+    "HH:MM:SS 형식 아님 (11:32 ~ 11:36)",
+    "HH:MM:SS 형식 아님 (11:42 ~ 11:47)",
+    "HH:MM:SS 형식 아님 (11:52 ~ 11:56)",
+    "HH:MM:SS 형식 아님 (11:58 ~ 12:04)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"11:17\",\n      \"end\": \"11:20\",\n      \"confidence\": \"high\",\n      \"reason\": \"마스크를 착용한 사람들이 야외에 서 있는 모습이 보입니다.\"\n    },\n    {\n      \"start\": \"11:32\",\n      \"end\": \"11:36\",\n      \"confidence\": \"high\",\n      \"reason\": \"마스크를 쓴 사람들이 줄을 지어 서 있는 장면입니다.\"\n    },\n    {\n      \"start\": \"11:42\",\n      \"end\": \"11:47\",\n      \"confidence\": \"high\",\n      \"reason\": \"마스크를 착용한 사람들의 얼굴이 클로즈업되며 서 있는 모습이 나타납니다.\"\n    },\n    {\n      \"start\": \"11:52\",\n      \"end\": \"11:56\",\n      \"confidence\": \"high\",\n      \"reason\": \"마스크를 쓴 채 서 있는 사람들의 모습이 다시 한 번 나옵니다.\"\n    },\n    {\n      \"start\": \"11:58\",\n      \"end\": \"12:04\",\n      \"confidence\": \"high\",\n      \"reason\": \"안경과 마스크를 착용한 사람을 포함하여 여러 명이 서 있는 장면이 계속됩니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 325,
+    "prompt_token_count": 112260,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 112112
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 148
+     }
+    ],
+    "thoughts_token_count": 486,
+    "total_token_count": 113071
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q06",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1345.0,
+     "end_sec": 1388.0,
+     "confidence": "high",
+     "reason": "영상에서 사람이 튀김우동라면을 먹는 장면이 00:22:25부터 00:23:08까지 나타납니다."
+    }
+   ],
+   "latency_sec": 46.40599999995902,
+   "format_issues": [],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"00:22:25\",\n      \"end\": \"00:23:08\",\n      \"confidence\": \"high\",\n      \"reason\": \"영상에서 사람이 튀김우동라면을 먹는 장면이 00:22:25부터 00:23:08까지 나타납니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 100,
+    "prompt_token_count": 239027,
+    "prompt_tokens_details": [
+     {
+      "modality": "TEXT",
+      "token_count": 152
+     },
+     {
+      "modality": "VIDEO",
+      "token_count": 238875
+     }
+    ],
+    "thoughts_token_count": 346,
+    "total_token_count": 239473
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q07",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 894.0,
+     "end_sec": 908.0,
+     "confidence": "high",
+     "reason": "소품샵에서 주황색 귤 모자를 쓰고 있는 모습이 나옵니다."
+    },
+    {
+     "start_sec": 909.0,
+     "end_sec": 932.0,
+     "confidence": "high",
+     "reason": "해안가와 카페에서 계속해서 주황색 모자를 착용하고 있는 장면이 나옵니다."
+    }
+   ],
+   "latency_sec": 50.03099999995902,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (14:54 ~ 15:08)",
+    "HH:MM:SS 형식 아님 (15:09 ~ 15:32)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"14:54\",\n      \"end\": \"15:08\",\n      \"confidence\": \"high\",\n      \"reason\": \"소품샵에서 주황색 귤 모자를 쓰고 있는 모습이 나옵니다.\"\n    },\n    {\n      \"start\": \"15:09\",\n      \"end\": \"15:32\",\n      \"confidence\": \"high\",\n      \"reason\": \"해안가와 카페에서 계속해서 주황색 모자를 착용하고 있는 장면이 나옵니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 142,
+    "prompt_token_count": 190521,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 190372
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 149
+     }
+    ],
+    "thoughts_token_count": 390,
+    "total_token_count": 191053
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q08",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 246.0,
+     "end_sec": 251.0,
+     "confidence": "high",
+     "reason": "장교들이 훈련장에서 만나 서로 악수를 나누고 있습니다."
+    },
+    {
+     "start_sec": 600.0,
+     "end_sec": 605.0,
+     "confidence": "high",
+     "reason": "사무실에서 두 명의 군인이 악수를 하고 있습니다."
+    },
+    {
+     "start_sec": 1685.0,
+     "end_sec": 1690.0,
+     "confidence": "high",
+     "reason": "내무반에서 여성 소대장이 훈련병과 악수를 하며 격려하고 있습니다."
+    },
+    {
+     "start_sec": 1699.0,
+     "end_sec": 1704.0,
+     "confidence": "high",
+     "reason": "여성 소대장이 다음 훈련병과도 두 손으로 악수를 하며 인사를 나눕니다."
+    }
+   ],
+   "latency_sec": 30.45299999974668,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (04:06 ~ 04:11)",
+    "HH:MM:SS 형식 아님 (10:00 ~ 10:05)",
+    "HH:MM:SS 형식 아님 (28:05 ~ 28:10)",
+    "HH:MM:SS 형식 아님 (28:19 ~ 28:24)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"04:06\",\n      \"end\": \"04:11\",\n      \"confidence\": \"high\",\n      \"reason\": \"장교들이 훈련장에서 만나 서로 악수를 나누고 있습니다.\"\n    },\n    {\n      \"start\": \"10:00\",\n      \"end\": \"10:05\",\n      \"confidence\": \"high\",\n      \"reason\": \"사무실에서 두 명의 군인이 악수를 하고 있습니다.\"\n    },\n    {\n      \"start\": \"28:05\",\n      \"end\": \"28:10\",\n      \"confidence\": \"high\",\n      \"reason\": \"내무반에서 여성 소대장이 훈련병과 악수를 하며 격려하고 있습니다.\"\n    },\n    {\n      \"start\": \"28:19\",\n      \"end\": \"28:24\",\n      \"confidence\": \"high\",\n      \"reason\": \"여성 소대장이 다음 훈련병과도 두 손으로 악수를 하며 인사를 나눕니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 259,
+    "prompt_token_count": 163766,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 163618
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 148
+     }
+    ],
+    "thoughts_token_count": 447,
+    "total_token_count": 164472
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q09",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 383.0,
+     "end_sec": 393.0,
+     "confidence": "high",
+     "reason": "여성이 거울을 보며 눈 화장을 세밀하게 수정하고 있는 장면입니다."
+    },
+    {
+     "start_sec": 926.0,
+     "end_sec": 931.0,
+     "confidence": "high",
+     "reason": "여성이 퍼프를 사용하여 얼굴에 파우더 팩트를 바르고 있습니다."
+    },
+    {
+     "start_sec": 937.0,
+     "end_sec": 942.0,
+     "confidence": "high",
+     "reason": "여성이 계속해서 퍼프를 이용해 얼굴 화장을 고치고 있습니다."
+    },
+    {
+     "start_sec": 110.0,
+     "end_sec": 115.0,
+     "confidence": "high",
+     "reason": "이동하는 차 안에서 여성이 거울을 보며 마스카라를 칠하고 있습니다."
+    },
+    {
+     "start_sec": 78.0,
+     "end_sec": 81.0,
+     "confidence": "high",
+     "reason": "택시 뒷좌석에서 여성이 속눈썹에 마스카라를 바르며 화장을 하는 모습입니다."
+    }
+   ],
+   "latency_sec": 61.17200000025332,
+   "format_issues": [],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"00:06:23\",\n      \"end\": \"00:06:33\",\n      \"confidence\": \"high\",\n      \"reason\": \"여성이 거울을 보며 눈 화장을 세밀하게 수정하고 있는 장면입니다.\"\n    },\n    {\n      \"start\": \"00:15:26\",\n      \"end\": \"00:15:31\",\n      \"confidence\": \"high\",\n      \"reason\": \"여성이 퍼프를 사용하여 얼굴에 파우더 팩트를 바르고 있습니다.\"\n    },\n    {\n      \"start\": \"00:15:37\",\n      \"end\": \"00:15:42\",\n      \"confidence\": \"high\",\n      \"reason\": \"여성이 계속해서 퍼프를 이용해 얼굴 화장을 고치고 있습니다.\"\n    },\n    {\n      \"start\": \"00:01:50\",\n      \"end\": \"00:01:55\",\n      \"confidence\": \"high\",\n      \"reason\": \"이동하는 차 안에서 여성이 거울을 보며 마스카라를 칠하고 있습니다.\"\n    },\n    {\n      \"start\": \"00:01:18\",\n      \"end\": \"00:01:21\",\n      \"confidence\": \"high\",\n      \"reason\": \"택시 뒷좌석에서 여성이 속눈썹에 마스카라를 바르며 화장을 하는 모습입니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 365,
+    "prompt_token_count": 112890,
+    "prompt_tokens_details": [
+     {
+      "modality": "TEXT",
+      "token_count": 147
+     },
+     {
+      "modality": "VIDEO",
+      "token_count": 112743
+     }
+    ],
+    "thoughts_token_count": 2631,
+    "total_token_count": 115886
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q10",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1389.0,
+     "end_sec": 1394.0,
+     "confidence": "high",
+     "reason": "트럭이 현대 오일뱅크 주유소로 진입하는 모습이 보입니다."
+    }
+   ],
+   "latency_sec": 31.484999999869615,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (23:09 ~ 23:14)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"23:09\",\n      \"end\": \"23:14\",\n      \"confidence\": \"high\",\n      \"reason\": \"트럭이 현대 오일뱅크 주유소로 진입하는 모습이 보입니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 76,
+    "prompt_token_count": 151938,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 151788
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 150
+     }
+    ],
+    "thoughts_token_count": 279,
+    "total_token_count": 152293
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q11",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 937.0,
+     "end_sec": 942.0,
+     "confidence": "high",
+     "reason": "홍대 거리의 홍익지구대(경찰서) 건물이 보입니다."
+    }
+   ],
+   "latency_sec": 28.42199999978766,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (15:37 ~ 15:42)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"15:37\",\n      \"end\": \"15:42\",\n      \"confidence\": \"high\",\n      \"reason\": \"홍대 거리의 홍익지구대(경찰서) 건물이 보입니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 75,
+    "prompt_token_count": 140832,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 140686
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 146
+     }
+    ],
+    "thoughts_token_count": 322,
+    "total_token_count": 141229
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q12",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1008.0,
+     "end_sec": 1023.0,
+     "confidence": "high",
+     "reason": "수영장에서 한 남성이 수경을 낀 채 물 속에 있는 장면이 나옵니다."
+    }
+   ],
+   "latency_sec": 27.186999999918044,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (16:48 ~ 17:03)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"16:48\",\n      \"end\": \"17:03\",\n      \"confidence\": \"high\",\n      \"reason\": \"수영장에서 한 남성이 수경을 낀 채 물 속에 있는 장면이 나옵니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 77,
+    "prompt_token_count": 117176,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 117026
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 150
+     }
+    ],
+    "thoughts_token_count": 407,
+    "total_token_count": 117660
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q13",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1106.0,
+     "end_sec": 1111.0,
+     "confidence": "high",
+     "reason": "크리에이터가 눈 위에 떨어져 두 동강 난 바나나 조각들을 집어드는 장면입니다."
+    }
+   ],
+   "latency_sec": 40.313000000081956,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (18:26 ~ 18:31)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"18:26\",\n      \"end\": \"18:31\",\n      \"confidence\": \"high\",\n      \"reason\": \"크리에이터가 눈 위에 떨어져 두 동강 난 바나나 조각들을 집어드는 장면입니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 80,
+    "prompt_token_count": 163132,
+    "prompt_tokens_details": [
+     {
+      "modality": "TEXT",
+      "token_count": 151
+     },
+     {
+      "modality": "VIDEO",
+      "token_count": 162981
+     }
+    ],
+    "thoughts_token_count": 238,
+    "total_token_count": 163450
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q14",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1108.0,
+     "end_sec": 1123.0,
+     "confidence": "high",
+     "reason": "곽범이 편의점에서 산 가츠산도 빵을 먹고 있습니다."
+    },
+    {
+     "start_sec": 1266.0,
+     "end_sec": 1278.0,
+     "confidence": "high",
+     "reason": "곽범이 편의점에서 구매한 야끼소바 빵을 먹고 있습니다."
+    }
+   ],
+   "latency_sec": 30.70300000021234,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (18:28 ~ 18:43)",
+    "HH:MM:SS 형식 아님 (21:06 ~ 21:18)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"18:28\",\n      \"end\": \"18:43\",\n      \"confidence\": \"high\",\n      \"reason\": \"곽범이 편의점에서 산 가츠산도 빵을 먹고 있습니다.\"\n    },\n    {\n      \"start\": \"21:06\",\n      \"end\": \"21:18\",\n      \"confidence\": \"high\",\n      \"reason\": \"곽범이 편의점에서 구매한 야끼소바 빵을 먹고 있습니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 137,
+    "prompt_token_count": 144929,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 144781
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 148
+     }
+    ],
+    "thoughts_token_count": 390,
+    "total_token_count": 145456
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q15",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1102.0,
+     "end_sec": 1118.0,
+     "confidence": "high",
+     "reason": "한 남자가 오두막 창문에 빨간색과 흰색이 섞인 격자 무늬 커튼을 달고 조심스럽게 형태를 잡고 있습니다."
+    }
+   ],
+   "latency_sec": 23.25,
+   "format_issues": [
+    "HH:MM:SS 형식 아님 (18:22 ~ 18:38)"
+   ],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"18:22\",\n      \"end\": \"18:38\",\n      \"confidence\": \"high\",\n      \"reason\": \"한 남자가 오두막 창문에 빨간색과 흰색이 섞인 격자 무늬 커튼을 달고 조심스럽게 형태를 잡고 있습니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 93,
+    "prompt_token_count": 114082,
+    "prompt_tokens_details": [
+     {
+      "modality": "TEXT",
+      "token_count": 150
+     },
+     {
+      "modality": "VIDEO",
+      "token_count": 113932
+     }
+    ],
+    "thoughts_token_count": 234,
+    "total_token_count": 114409
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q16",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 719.0,
+     "end_sec": 724.0,
+     "confidence": "high",
+     "reason": "파란색 티셔츠를 입은 남자가 실내에서 모자를 머리에 쓰고 옷매무새를 가다듬는 모습이 나옵니다."
+    }
+   ],
+   "latency_sec": 52.375,
+   "format_issues": [],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"00:11:59\",\n      \"end\": \"00:12:04\",\n      \"confidence\": \"high\",\n      \"reason\": \"파란색 티셔츠를 입은 남자가 실내에서 모자를 머리에 쓰고 옷매무새를 가다듬는 모습이 나옵니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 97,
+    "prompt_token_count": 185156,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 185003
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 153
+     }
+    ],
+    "thoughts_token_count": 825,
+    "total_token_count": 186078
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  },
+  {
+   "case_id": "q17",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 0.0,
+     "end_sec": 5.0,
+     "confidence": "high",
+     "reason": "남자가 길거리에서 어묵 꼬치를 입에 넣고 먹는 장면입니다."
+    },
+    {
+     "start_sec": 866.0,
+     "end_sec": 868.0,
+     "confidence": "high",
+     "reason": "앞서 나왔던 남자가 어묵 꼬치를 먹는 동일한 장면이 다시 등장합니다."
+    }
+   ],
+   "latency_sec": 37.07800000021234,
+   "format_issues": [],
+   "raw_text": "{\n  \"matches\": [\n    {\n      \"start\": \"00:00:00\",\n      \"end\": \"00:00:05\",\n      \"confidence\": \"high\",\n      \"reason\": \"남자가 길거리에서 어묵 꼬치를 입에 넣고 먹는 장면입니다.\"\n    },\n    {\n      \"start\": \"00:14:26\",\n      \"end\": \"00:14:28\",\n      \"confidence\": \"high\",\n      \"reason\": \"앞서 나왔던 남자가 어묵 꼬치를 먹는 동일한 장면이 다시 등장합니다.\"\n    }\n  ]\n}",
+   "usage": {
+    "candidates_token_count": 152,
+    "prompt_token_count": 122908,
+    "prompt_tokens_details": [
+     {
+      "modality": "VIDEO",
+      "token_count": 122759
+     },
+     {
+      "modality": "TEXT",
+      "token_count": 149
+     }
+    ],
+    "thoughts_token_count": 310,
+    "total_token_count": 123370
+   },
+   "model_version": "gemini-3.1-pro-preview"
+  }
+ ]
+}

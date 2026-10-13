@@ -1,0 +1,459 @@
+{
+ "_published": "논문 공개용: 원본 실행 기록에서 테스트셋 17개 질의만 남기고 ID를 q01~q17로 바꾸고 로컬 경로를 지웠다. 응답·토큰·지연 시간 값은 원본 그대로다.",
+ "profile_name": "twelvelabs-marengo3.0",
+ "profile": {
+  "backend": "twelvelabs",
+  "model": "marengo3.0"
+ },
+ "started_at": "2026-10-11T10:28:44",
+ "repeats": 1,
+ "max_matches": 5,
+ "finished_at": "2026-10-11T10:35:57",
+ "testset": "testsets/vlog17.json",
+ "youtube_url": "",
+ "cases": [
+  {
+   "id": "q01",
+   "query": "사람이 바나나 먹는 장면",
+   "video": "videos/I6sXHxGjCPU.mp4",
+   "gt": [
+    [
+     2541.0,
+     2592.0
+    ],
+    [
+     821.0,
+     829.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=I6sXHxGjCPU"
+  },
+  {
+   "id": "q02",
+   "query": "사람이 런닝머신타는 장면",
+   "video": "videos/x6_cFyjYXwM.mp4",
+   "gt": [
+    [
+     133.0,
+     138.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=x6_cFyjYXwM"
+  },
+  {
+   "id": "q05",
+   "query": "사람들이 마스크 쓰고 서 있는 장면",
+   "video": "videos/jMtG6UOgzZA.mp4",
+   "gt": [
+    [
+     782.0,
+     789.0
+    ],
+    [
+     1170.0,
+     1178.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=jMtG6UOgzZA"
+  },
+  {
+   "id": "q08",
+   "query": "사람과 사람이 악수하는 장면",
+   "video": "videos/vCSEMlNLmO0.mp4",
+   "gt": [
+    [
+     1659.0,
+     1705.0
+    ]
+   ],
+   "decoys": [
+    [
+     444.0,
+     455.0
+    ]
+   ],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=vCSEMlNLmO0"
+  },
+  {
+   "id": "q09",
+   "query": "사람이 얼굴화장하는 장면",
+   "video": "videos/OPHazH7HlA4.mp4",
+   "gt": [
+    [
+     82.0,
+     144.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=OPHazH7HlA4"
+  },
+  {
+   "id": "q15",
+   "query": "빨간색 커튼을 치는 장면",
+   "video": "videos/B_TWwMgKu-Q.mp4",
+   "gt": [
+    [
+     1103.0,
+     1117.0
+    ]
+   ],
+   "decoys": [],
+   "note": "",
+   "skip_reason": "",
+   "youtube_url": "https://www.youtube.com/watch?v=B_TWwMgKu-Q"
+  }
+ ],
+ "prepare": [
+  {
+   "video": "videos/I6sXHxGjCPU.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6ac0974e5babcc57e15f3bc6",
+    "reused": true,
+    "duration_sec": 8255.594
+   },
+   "seconds": 5.016000000294298
+  },
+  {
+   "video": "videos/x6_cFyjYXwM.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6acae6d2ec88f79c1924d7d0",
+    "reused": false,
+    "duration_sec": 1281.393197
+   },
+   "seconds": 70.13999999966472
+  },
+  {
+   "video": "videos/jMtG6UOgzZA.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6acae71e8636e342ea2b6c08",
+    "reused": false,
+    "duration_sec": 1232.329433
+   },
+   "seconds": 75.36000000033528
+  },
+  {
+   "video": "videos/vCSEMlNLmO0.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6acae76dd77e020d38c0b894",
+    "reused": false,
+    "duration_sec": 1798.199728
+   },
+   "seconds": 100.125
+  },
+  {
+   "video": "videos/OPHazH7HlA4.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6acae7d6520605b2a73276bd",
+    "reused": false,
+    "duration_sec": 1238.738141
+   },
+   "seconds": 105.53099999995902
+  },
+  {
+   "video": "videos/B_TWwMgKu-Q.mp4",
+   "info": {
+    "index_id": "6ac09473b2cf72f592951e07",
+    "video_id": "6acae836bce2fb2360fa2669",
+    "reused": false,
+    "duration_sec": 1252.252154
+   },
+   "seconds": 75.28099999995902
+  }
+ ],
+ "records": [
+  {
+   "case_id": "q01",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 2571.833251953125,
+     "end_sec": 2575.033447265625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 2564.63330078125,
+     "end_sec": 2571.833251953125,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 2549.966552734375,
+     "end_sec": 2560.699951171875,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 2541.833251953125,
+     "end_sec": 2549.966552734375,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 813.3666381835938,
+     "end_sec": 820.7000122070312,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.35999999986961484,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 2571.833251953125, \"end\": 2575.033447265625, \"rank\": 1}, {\"start\": 2564.63330078125, \"end\": 2571.833251953125, \"rank\": 2}, {\"start\": 2549.966552734375, \"end\": 2560.699951171875, \"rank\": 3}, {\"start\": 2541.833251953125, \"end\": 2549.966552734375, \"rank\": 4}, {\"start\": 813.3666381835938, \"end\": 820.7000122070312, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  },
+  {
+   "case_id": "q02",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 141.03334045410156,
+     "end_sec": 145.56666564941406,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 190.25555419921875,
+     "end_sec": 199.19332885742188,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 208.131103515625,
+     "end_sec": 217.0688934326172,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 199.19332885742188,
+     "end_sec": 208.131103515625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 135.96665954589844,
+     "end_sec": 141.03334045410156,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.2809999999590218,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 141.03334045410156, \"end\": 145.56666564941406, \"rank\": 1}, {\"start\": 190.25555419921875, \"end\": 199.19332885742188, \"rank\": 2}, {\"start\": 208.131103515625, \"end\": 217.0688934326172, \"rank\": 3}, {\"start\": 199.19332885742188, \"end\": 208.131103515625, \"rank\": 4}, {\"start\": 135.96665954589844, \"end\": 141.03334045410156, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  },
+  {
+   "case_id": "q05",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 715.9000244140625,
+     "end_sec": 720.2333374023438,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 720.2333374023438,
+     "end_sec": 725.9000244140625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 702.9000244140625,
+     "end_sec": 706.566650390625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 676.9000244140625,
+     "end_sec": 682.9000244140625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 706.566650390625,
+     "end_sec": 711.7666625976562,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.26500000013038516,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 715.9000244140625, \"end\": 720.2333374023438, \"rank\": 1}, {\"start\": 720.2333374023438, \"end\": 725.9000244140625, \"rank\": 2}, {\"start\": 702.9000244140625, \"end\": 706.566650390625, \"rank\": 3}, {\"start\": 676.9000244140625, \"end\": 682.9000244140625, \"rank\": 4}, {\"start\": 706.566650390625, \"end\": 711.7666625976562, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  },
+  {
+   "case_id": "q08",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1701.566650390625,
+     "end_sec": 1706.5,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 598.45556640625,
+     "end_sec": 606.54443359375,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1692.9932861328125,
+     "end_sec": 1701.566650390625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1675.8466796875,
+     "end_sec": 1684.4200439453125,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1684.4200439453125,
+     "end_sec": 1692.9932861328125,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.26599999982863665,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 1701.566650390625, \"end\": 1706.5, \"rank\": 1}, {\"start\": 598.45556640625, \"end\": 606.54443359375, \"rank\": 2}, {\"start\": 1692.9932861328125, \"end\": 1701.566650390625, \"rank\": 3}, {\"start\": 1675.8466796875, \"end\": 1684.4200439453125, \"rank\": 4}, {\"start\": 1684.4200439453125, \"end\": 1692.9932861328125, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  },
+  {
+   "case_id": "q09",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 388.4333190917969,
+     "end_sec": 396.8999938964844,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 931.6333618164062,
+     "end_sec": 941.5,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 921.7666625976562,
+     "end_sec": 931.6333618164062,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1220.0999755859375,
+     "end_sec": 1229.4000244140625,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1229.4000244140625,
+     "end_sec": 1238.699951171875,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.25,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 388.4333190917969, \"end\": 396.8999938964844, \"rank\": 1}, {\"start\": 931.6333618164062, \"end\": 941.5, \"rank\": 2}, {\"start\": 921.7666625976562, \"end\": 931.6333618164062, \"rank\": 3}, {\"start\": 1220.0999755859375, \"end\": 1229.4000244140625, \"rank\": 4}, {\"start\": 1229.4000244140625, \"end\": 1238.699951171875, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  },
+  {
+   "case_id": "q15",
+   "repeat": 0,
+   "status": "ok",
+   "attempts": 1,
+   "retry_errors": [],
+   "moments": [
+    {
+     "start_sec": 1112.566650390625,
+     "end_sec": 1116.0333251953125,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1116.0333251953125,
+     "end_sec": 1120.9666748046875,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1168.36669921875,
+     "end_sec": 1171.7667236328125,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1140.566650390625,
+     "end_sec": 1147.9666748046875,
+     "confidence": "",
+     "reason": ""
+    },
+    {
+     "start_sec": 1102.1666259765625,
+     "end_sec": 1112.566650390625,
+     "confidence": "",
+     "reason": ""
+    }
+   ],
+   "latency_sec": 0.25,
+   "format_issues": [],
+   "raw_text": "[{\"start\": 1112.566650390625, \"end\": 1116.0333251953125, \"rank\": 1}, {\"start\": 1116.0333251953125, \"end\": 1120.9666748046875, \"rank\": 2}, {\"start\": 1168.36669921875, \"end\": 1171.7667236328125, \"rank\": 3}, {\"start\": 1140.566650390625, \"end\": 1147.9666748046875, \"rank\": 4}, {\"start\": 1102.1666259765625, \"end\": 1112.566650390625, \"rank\": 5}]",
+   "usage": {
+    "search_queries": 1
+   },
+   "model_version": null
+  }
+ ]
+}

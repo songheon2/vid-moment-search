@@ -4,3 +4,8 @@ __pycache__/
 .env.*
 !.env.example
 videos/
+videos.txt
+# 로컬 작업 파일: 원본 실행 기록, 검토 시트, 내부 테스트셋
+results_raw/
+review*.csv
+testsets/defense_set1.json
